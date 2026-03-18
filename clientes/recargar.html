@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recargar saldo | Car Wash The Inges</title>
+  <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="brand">
+        <h1>💳 Recargar saldo</h1>
+        <p>Ingresa el monto que deseas agregar a tu tarjeta RFID.</p>
+      </div>
+
+      <div class="amount-box">
+        <h3>Recarga tu cuenta</h3>
+        <div class="form-group">
+          <label for="monto">Monto</label>
+          <input id="monto" type="number" min="1" placeholder="Ejemplo: 50">
+        </div>
+      </div>
+
+      <button class="btn btn-success" onclick="recargar()">Confirmar recarga</button>
+
+      <div class="actions" style="margin-top:16px;">
+        <button class="btn btn-secondary" onclick="window.location='dashboard.html'">Volver al panel</button>
+      </div>
+
+      <p class="helper center-text">
+        El saldo se actualizará automáticamente en tu cuenta.
+      </p>
+    </div>
+  </div>
+
+  <script src="cliente.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrativo | Car Wash The Inges</title>
+
+  <link rel="stylesheet" href="../clientes/cliente.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <div class="admin-page">
+    <div class="admin-container">
+
+      <!-- HEADER -->
+      <header class="admin-topbar">
+        <div class="admin-title">
+          <h1>🛠 Panel Administrativo</h1>
+          <p>Control general del sistema Car Wash The Inges</p>
+        </div>
+
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="cargarAdmin()">Actualizar</button>
+        </div>
+      </header>
+
+      <!-- ESTADISTICAS -->
+      <section class="admin-grid">
+        <div class="stat-card">
+          <small>Clientes registrados</small>
+          <div class="stat-value" id="statClientes">0</div>
+        </div>
+
+        <div class="stat-card">
+          <small>Tarjetas RFID registradas</small>
+          <div class="stat-value" id="statTarjetas">0</div>
+        </div>
+
+        <div class="stat-card">
+          <small>Dinero generado</small>
+          <div class="stat-value" id="statGenerado">Q0</div>
+        </div>
+
+        <div class="stat-card">
+          <small>Saldo total en tarjetas</small>
+          <div class="stat-value" id="statCaja">Q0</div>
+        </div>
+      </section>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <section class="admin-panels">
+
+        <!-- PRECIOS -->
+        <div class="admin-panel">
+          <h2>Precios de lavados</h2>
+
+          <div class="price-grid">
+            <div class="price-card">
+              <h3>Lavado Normal</h3>
+              <label>Precio actual</label>
+              <input id="precioNormal" type="number" min="1" placeholder="25">
+            </div>
+
+            <div class="price-card">
+              <h3>Lavado Intensivo</h3>
+              <label>Precio actual</label>
+              <input id="precioIntensivo" type="number" min="1" placeholder="40">
+            </div>
+          </div>
+
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="guardarPrecios()">
+              Guardar precios
+            </button>
+          </div>
+        </div>
+
+        <!-- GRAFICA -->
+        <div class="admin-panel">
+          <h2>Ingresos del sistema</h2>
+
+          <div class="chart-wrap">
+            <canvas id="graficaIngresos"></canvas>
+          </div>
+
+          <div class="panel-actions">
+            <button class="btn btn-success" onclick="exportarExcel()">
+              Exportar reporte a Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- USUARIOS -->
+        <div class="admin-panel">
+          <h2>Usuarios registrados</h2>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Tarjeta RFID</th>
+                  <th>Saldo</th>
+                </tr>
+              </thead>
+              <tbody id="tablaUsuariosAdmin"></tbody>
+            </table>
+          </div>
+        </div>
+
+     
+        <div class="admin-panel">
+          <h2>Resumen</h2>
+
+          <div class="finance-grid">
+            <div class="finance-box">
+              <small>Lavados normales</small>
+              <div class="value" id="statNormales">0</div>
+            </div>
+
+            <div class="finance-box">
+              <small>Lavados intensivos</small>
+              <div class="value" id="statIntensivos">0</div>
+            </div>
+
+            <div class="finance-box">
+              <small>Ingreso por normales</small>
+              <div class="value" id="statIngresoNormal">Q0</div>
+            </div>
+
+            <div class="finance-box">
+              <small>Ingreso por intensivos</small>
+              <div class="value" id="statIngresoIntensivo">Q0</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+  <!-- LIBRERIAS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="admin.js"></script>
+
+</body>
+</html>

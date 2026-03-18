@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Car Wash Control</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="topBar">
+
+<h1>🚗 CAR WASH The Inges</h1>
+
+<div class="ticketPanel">
+Ticket Actual
+<div id="ticket">001</div>
+</div>
+
+<div class="counterPanel">
+Autos Lavados
+<div id="contador">0</div>
+</div>
+
+<div class="counterPanel">
+Cliente
+<div id="clienteActual">Esperando...</div>
+</div>
+
+<div class="counterPanel">
+Tipo de Lavado
+<div id="tipoLavado">NORMAL</div>
+</div>
+
+</header>
+
+
+<section class="estadoPanel">
+
+<div class="estadoTitulo">Estado Actual</div>
+
+<div id="estado" class="estadoTexto">
+Esperando Vehículo
+</div>
+
+</section>
+
+
+<!-- TUNEL DE LAVADO -->
+
+
+
+<section class="progressPanel">
+
+<div class="progressBar">
+<div id="progress"></div>
+</div>
+
+<div class="steps">
+
+<div class="step" id="step0">Pre-Lavado</div>
+<div class="step" id="step1">Enjabonado</div>
+<div class="step" id="step2">Cepillado</div>
+<div class="step" id="step3">Desaguado</div>
+<div class="step" id="step4">Secado</div>
+
+</div>
+
+</section>
+
+
+<section class="historialPanel">
+
+<h2>Historial de Lavados</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Ticket</th>
+<th>Hora</th>
+<th>Tipo Lavado</th>
+</tr>
+</thead>
+
+<tbody id="tablaHistorial">
+
+</tbody>
+
+</table>
+
+</section>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

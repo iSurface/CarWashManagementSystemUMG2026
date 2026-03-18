@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | Car Wash The Inges</title>
+  <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="brand">
+        <h1>📝 Crear cuenta</h1>
+        <p>Registra tu usuario y vincula tu tarjeta RFID para usar el sistema.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" type="text" placeholder="Ingresa tu nombre">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input id="email" type="email" placeholder="ejemplo@correo.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input id="password" type="password" placeholder="Crea una contraseña">
+      </div>
+
+      <div class="form-group">
+        <label for="tarjeta">Código de tarjeta RFID</label>
+        <input id="tarjeta" type="text" placeholder="Ejemplo: 79 DA 82 6D">
+      </div>
+
+      <button class="btn btn-success" onclick="registrar()">Crear cuenta</button>
+
+      <div class="link-row">
+        ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="cliente.js"></script>
+</body>
+</html>

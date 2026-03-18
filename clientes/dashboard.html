@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Panel | Car Wash The Inges</title>
+  <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+  <div class="page">
+    <div class="card wide">
+      <div class="dashboard-layout">
+        <div class="panel hero">
+          <span class="top-chip">Panel del cliente</span>
+          <h2 id="bienvenida">Bienvenido/a</h2>
+          <p>
+            Desde aquí puedes consultar tu tarjeta RFID, verificar tu saldo
+            actual y realizar recargas de forma rápida y segura.
+          </p>
+
+          <div class="actions">
+            <button class="btn btn-primary" onclick="window.location='recargar.html'">Recargar saldo</button>
+            <button class="btn btn-secondary" onclick="cerrarSesion()">Cerrar sesión</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Mi tarjeta</h2>
+
+          <div class="info-grid">
+            <div class="info-box">
+              <small>Código RFID</small>
+              <div class="value" id="codigo">Cargando...</div>
+            </div>
+
+            <div class="info-box">
+              <small>Saldo actual</small>
+              <div class="value" id="saldo">Cargando...</div>
+            </div>
+          </div>
+
+          <p class="helper">
+            Recuerda mantener saldo disponible para iniciar tus lavados sin inconvenientes.
+          </p>
+           <div style="margin-top:24px;">
+           <h2 style="margin-bottom:14px;">Historial de lavados</h2>
+            <div id="historialLavados" class="history-list">
+           <p class="helper">Cargando historial...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="cliente.js"></script>
+  <script>
+    window.onload = cargarDatos;
+  </script>
+</body>
+</html>
