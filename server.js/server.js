@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
-
+const TIEMPO_FASE = 5000; // 15 segundos por fase
 const app = express();
 
 let faseActual = -1;
@@ -21,28 +21,32 @@ app.use(express.json());
 
 
 const db = mysql.createConnection({
-  host: "sql.freedb.tech",
-  user: "freedb_admincarwash",
-  password: "a2h3j?$uz39%MYn",
-  database: "freedb_umgcarwash",
+  host: "173.249.12.27",
+  user: "codedmo_carwash_user",
+  password: ",NvHCAl[EIzi10)q",
+  database: "codedmo_carwash",
   port: 3306
 });
+/* [10:24 pm, 20/5/2026] Adony: DB: codedmo_carwash
+User: codedmo_carwash_user
+Password: ]ig0hzEM!kU{#qiM
+[10:29 pm, 20/5/2026] Adony: Host: 89.238.174.20 */
 
 db.connect((err) => {
   if (err) {
     console.log("Error conexion:", err);
   } else {
-    console.log("Conectado a MySQL FreeDB");
+    console.log("Conectado a MySQL");
   }
 });
 
 
 const port = new SerialPort({
-  path: "COM6",
+  path: "COM10",
   baudRate: 9600
 });
 
-const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
+const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
 function enviarArduino(mensaje) {
   if (port && port.isOpen) {
@@ -60,7 +64,28 @@ parser.on("data", (data) => {
 
   data = data.trim();
   console.log("Arduino:", data);
+  if (data.startsWith("FIN_FASE_")) {
+  console.log("Arduino terminó:", data);
 
+  indiceFaseActual++;
+  enviarSiguienteFase();
+
+  return;
+}
+
+if (data === "LISTO_NUEVO_LAVADO") {
+  console.log("Sistema listo para nuevo lavado");
+
+  lavadoEnProceso = false;
+  lavadoPendiente = false;
+  faseActual = -1;
+  clienteActual = "Ninguno";
+  tipoLavadoActual = "NORMAL";
+  ultimaTarjeta = null;
+  tiempoUltimaLectura = 0;
+
+  return;
+}
 
   if (data === "CARRO_OK") {
     console.log("Carro detectado");
@@ -205,40 +230,50 @@ function verificarTarjeta(uid, tipo) {
   );
 }
 
+let secuenciaActual = [];
+let indiceFaseActual = 0;
+
 function iniciarLavado(tipo) {
+  const normal = [0, 1, 2, 3, 4];
+  const intensivo = [0, 1, 2, 3, 1, 2, 3, 4];
 
-  const normal = [0,1,2,3,4];
-  const intensivo = [0,1,2,3,1,2,3,4];
+  secuenciaActual = tipo === "INTENSIVO" ? intensivo : normal;
+  indiceFaseActual = 0;
 
-  const secuencia = tipo === "INTENSIVO" ? intensivo : normal;
+  console.log("Iniciando secuencia:", secuenciaActual);
 
-  secuencia.forEach((fase, i) => {
-    setTimeout(() => {
-      faseActual = fase;
-      enviarArduino("FASE_" + fase);
-      console.log("Fase:", fase);
-    }, i * 5000);
-  });
-
-  setTimeout(() => {
-    autosLavados++;
-    faseActual = -1;
-    lavadoEnProceso = false;
-    lavadoPendiente = false;
-
-    clienteActual = "Ninguno";
-    tipoLavadoActual = "NORMAL";
-
-    ultimaTarjeta = null;
-    tiempoUltimaLectura = 0;
-
-    enviarArduino("FIN");
-
-    console.log("Lavado terminado");
-
-  }, secuencia.length * 5000);
+  enviarSiguienteFase();
 }
 
+function enviarSiguienteFase() {
+  if (indiceFaseActual >= secuenciaActual.length) {
+    finalizarLavado();
+    return;
+  }
+
+  const fase = secuenciaActual[indiceFaseActual];
+
+  faseActual = fase;
+  enviarArduino("FASE_" + fase);
+  console.log("Fase enviada:", fase);
+}
+
+function finalizarLavado() {
+  autosLavados++;
+  faseActual = -1;
+  lavadoEnProceso = false;
+  lavadoPendiente = false;
+
+  clienteActual = "Ninguno";
+  tipoLavadoActual = "NORMAL";
+
+  ultimaTarjeta = null;
+  tiempoUltimaLectura = 0;
+
+  enviarArduino("FIN");
+
+  console.log("Lavado terminado");
+}
 
 app.post("/registro", (req, res) => {
   const { nombre, email, password, tarjeta } = req.body;
